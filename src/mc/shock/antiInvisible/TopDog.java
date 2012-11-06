@@ -34,6 +34,9 @@ public class TopDog extends JavaPlugin implements Listener{
 		{
 		if (player.getItemInHand().getTypeId() == 373)
 		{
+			if (player.hasPermission("antiinvisibility.bypass"))
+			return;
+			else{
 		int data = player.getItemInHand().getDurability();
 		if ((data == 8193) || (data == 8206) || (data == 16318) || (data == 16382))
 		{
@@ -41,6 +44,7 @@ public class TopDog extends JavaPlugin implements Listener{
 			player.getInventory().setItemInHand(new ItemStack (Material.CAKE, 1));
 			player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled.");
 			player.getPlayer().sendMessage(ChatColor.RED + "But here's some cake :D");
+		}
 		}
 		}
 		}
@@ -54,6 +58,9 @@ public class TopDog extends JavaPlugin implements Listener{
 		   Player player = (Player) event.getPlayer();
 			if (((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK)))
 			{
+				if (player.hasPermission("antiinvisibility.bypass"))
+				return event;
+				else{
 		   ItemStack it = player.getItemInHand();
 		   Material mat = it.getType();
 		   if (mat == Material.POTION)
@@ -68,6 +75,7 @@ public class TopDog extends JavaPlugin implements Listener{
 				   player.getPlayer().sendMessage(ChatColor.RED + "But here's some cake :D");
 			   }
 		   }
+				}
 		   }
 			return event;
 	   }
@@ -85,10 +93,7 @@ public class TopDog extends JavaPlugin implements Listener{
 			   {
 				   event.setCancelled(true);
 			   }
-		   }
-		   
-		   
+		   } 
 		return event; 
 	   }
-
 }
