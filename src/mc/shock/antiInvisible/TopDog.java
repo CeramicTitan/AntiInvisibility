@@ -14,7 +14,7 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 
 public class TopDog extends JavaPlugin implements Listener{
-	
+
 	public void onEnable()
 	{
 		getLogger().info("Anti Invisible enabled!");
@@ -25,6 +25,10 @@ public class TopDog extends JavaPlugin implements Listener{
 		getLogger().info("Anti Invisible disabled!");
 	}
 	
+	
+	
+	
+	
 	@EventHandler
 	public void onPlayerClick(PlayerInteractEvent e)
 	{
@@ -32,23 +36,21 @@ public class TopDog extends JavaPlugin implements Listener{
 		Player player = (Player) e.getPlayer();
 		if (((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK)))
 		{
-		if (player.getItemInHand().getTypeId() == 373)
-		{
-			if (player.hasPermission("antiinvisibility.bypass"))
-			return;
-			else{
-		int data = player.getItemInHand().getDurability();
-		if ((data == 8193) || (data == 8206) || (data == 16318) || (data == 16382))
-		{
-			e.setCancelled(true);
-			player.getInventory().setItemInHand(new ItemStack (Material.CAKE, 1));
-			player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled.");
-			player.getPlayer().sendMessage(ChatColor.RED + "But here's some cake :D");
+			ItemStack it = player.getItemInHand();
+			Material mat = it.getType();
+			if (mat == Material.POTION)
+			{
+				Potion potion = Potion.fromItemStack(it);
+				PotionEffectType effecttype = potion.getType().getEffectType();
+				if (effecttype == PotionEffectType.INVISIBILITY)
+				{
+			       e.setCancelled(true);
+			       player.getInventory().setItemInHand(new ItemStack (Material.GLASS_BOTTLE, 1));
+			       player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled.");
 		}
 		}
 		}
-		}
-	}	
+		}	
 	
 	   @EventHandler
 	    public static PlayerInteractEvent interact(PlayerInteractEvent event)
@@ -58,9 +60,6 @@ public class TopDog extends JavaPlugin implements Listener{
 		   Player player = (Player) event.getPlayer();
 			if (((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK)))
 			{
-				if (player.hasPermission("antiinvisibility.bypass"))
-				return event;
-				else{
 		   ItemStack it = player.getItemInHand();
 		   Material mat = it.getType();
 		   if (mat == Material.POTION)
@@ -70,13 +69,11 @@ public class TopDog extends JavaPlugin implements Listener{
 			   if (effecttype == PotionEffectType.INVISIBILITY) 
 			   {
 				   event.setCancelled(true);
-				   player.getInventory().setItemInHand(new ItemStack (Material.CAKE, 1));
+				   player.getInventory().setItemInHand(new ItemStack (Material.GLASS_BOTTLE, 1));
 				   player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled");
-				   player.getPlayer().sendMessage(ChatColor.RED + "But here's some cake :D");
 			   }
 		   }
 				}
-		   }
 			return event;
 	   }
 	   
