@@ -45,8 +45,9 @@ public class TopDog extends JavaPlugin implements Listener{
 				if (effecttype == PotionEffectType.INVISIBILITY)
 				{
 			       e.setCancelled(true);
-			       player.getInventory().setItemInHand(new ItemStack (Material.GLASS_BOTTLE, 1));
+			       player.getInventory().setItemInHand(new ItemStack (Material.CAKE, 1));
 			       player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled.");
+			       player.getPlayer().sendMessage(ChatColor.RED + "But here's some cake :D");
 		}
 		}
 		}
@@ -69,8 +70,9 @@ public class TopDog extends JavaPlugin implements Listener{
 			   if (effecttype == PotionEffectType.INVISIBILITY) 
 			   {
 				   event.setCancelled(true);
-				   player.getInventory().setItemInHand(new ItemStack (Material.GLASS_BOTTLE, 1));
+				   player.getInventory().setItemInHand(new ItemStack (Material.CAKE, 1));
 				   player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled");
+			       player.getPlayer().sendMessage(ChatColor.RED + "But here's some cake :D");
 			   }
 		   }
 				}
