@@ -1,92 +1,73 @@
 package mc.shock.antiInvisible;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockDispenseEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffectType;
 
 public class TopDog extends JavaPlugin
   implements Listener
 {
+	
+	private Logger log;
+	PluginManager pm;
+	FileConfiguration newConfig;
+	Boolean invisibility;
+	Boolean poison;
+	
   public void onEnable()
   {
-    getLogger().info("Anti Invisible enabled!");
     getServer().getPluginManager().registerEvents(this, this);
+    this.pm = getServer().getPluginManager();
+    this.log = Logger.getLogger("Minecraft");
+    loadConfig();
+    
+    loadPotions();
+    
   }
 
-  public void onDisable() {
-    getLogger().info("Anti Invisible disabled!");
-  }
-
-  @EventHandler
-  public void onPlayerClick(PlayerInteractEvent e)
+  private void loadConfig() 
   {
-    Action action = e.getAction();
-    Player player = e.getPlayer();
-    if ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK))
-    {
-      ItemStack it = player.getItemInHand();
-      Material mat = it.getType();
-      if (mat == Material.POTION)
-      {
-        Potion potion = Potion.fromItemStack(it);
-        PotionEffectType effecttype = potion.getType().getEffectType();
-        if (effecttype == PotionEffectType.INVISIBILITY)
-        {
-          e.setCancelled(true);
-          player.getInventory().setItemInHand(new ItemStack(Material.GLASS_BOTTLE, 1));
-          player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled.");
-        }
+  try {
+	reloadConfig();
+	this.newConfig = getConfig();
+	this.newConfig.options().copyDefaults(true);
+	
+	this.invisibility = Boolean.valueOf(this.newConfig.getBoolean("invisibility", false));
+	this.invisibility = Boolean.valueOf(this.newConfig.getBoolean("poison", false));
+	saveConfig();
+	this.log.info("[AntiInvisible] config loaded");
       }
-    }
+    catch (Exception e) 
+  {
+	  this.log.log(Level.SEVERE, "[AntiInvisibility] Failed to load AntiInvisibility config", e);
+	  e.printStackTrace();
+  }
+  }
+  
+  public void loadPotions()
+  {
+	  try
+	  {
+		  getCommand("ai").setExecutor(new CommandHandler(this));
+		  pm.registerEvents(new invisibleListener(this), this);
+		  this.log.info("[AntiInvisible] potion listeners loaded");
+	  }
+	  catch (Exception e)
+	  {
+		  this.log.log(Level.SEVERE, "[AntiInvisibility] Failed to load potion listeners.");
+	  }
   }
 
-  @EventHandler
-  public static PlayerInteractEvent interact(PlayerInteractEvent event)
-  {
-    Action action = event.getAction();
-    Player player = event.getPlayer();
-    if ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK))
-    {
-      ItemStack it = player.getItemInHand();
-      Material mat = it.getType();
-      if (mat == Material.POTION)
-      {
-        Potion potion = Potion.fromItemStack(it);
-        PotionEffectType effecttype = potion.getType().getEffectType();
-        if (effecttype == PotionEffectType.INVISIBILITY)
-        {
-          event.setCancelled(true);
-          player.getInventory().setItemInHand(new ItemStack(Material.GLASS_BOTTLE, 1));
-          player.getPlayer().sendMessage(ChatColor.RED + "Potions of invisibility are disabled");
-        }
-      }
-    }
-    return event;
-  }
+  
+  
+public void onDisable() 
+{
+    // No point in having anything here now.
+}
 
-  @EventHandler
-  public static BlockDispenseEvent dispense(BlockDispenseEvent event)
-  {
-    ItemStack it = event.getItem();
-    Material mat = it.getType();
-    if (mat == Material.POTION)
-    {
-      Potion potion = Potion.fromItemStack(it);
-      PotionEffectType effecttype = potion.getType().getEffectType();
-      if (effecttype == PotionEffectType.INVISIBILITY)
-      {
-        event.setCancelled(true);
-      }
-    }
-    return event;
-  }
+
 }
