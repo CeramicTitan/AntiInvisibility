@@ -21,23 +21,34 @@ public class CommandHandler extends JavaPlugin implements CommandExecutor
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		if (cmd.getName().equalsIgnoreCase("nopot"))
+		if (cmd.getName().equalsIgnoreCase("nopot")) // /nopot command
 		{
-			if (args.length != 1 && sender.hasPermission("nopot.info"))
+			if (args.length != 1 && sender.hasPermission("nopot.info")) // checks for invalid argument number.
 			{
 				sender.sendMessage(nopot + ChatColor.WHITE + "Commands:");
 				sender.sendMessage(line1);
 				sender.sendMessage(line2);
 			}
-			if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("nopot.reload"))
+			
+			if (args.length == 1 && !(sender.hasPermission("nopot.info")) || !(sender.hasPermission("nopot.reload")))
+				// checks if user has permission to use info or reload.
 			{
-				// reload
-				sender.sendMessage(nopot + "config reloaded.");
+				sender.sendMessage(nopot + ChatColor.RED + "You do not have permission for this.");
 			}
 			
-			if (args[0].equalsIgnoreCase("info") && sender.hasPermission("nopot.info"))
+			if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("nopot.reload"))
+				// reload the config
 			{
-				// print config
+				reloadConfig();
+				sender.sendMessage(nopot + "config reloaded.");
+				// Figure out how to reload the plugin
+			}
+			
+			if (args[0].equalsIgnoreCase("info") && sender.hasPermission("nopot.info")) 
+				// return all disabled potions
+			{
+				sender.sendMessage(nopot + ChatColor.WHITE + "Disabled potions:");
+				// print disabled potions
 			}
 		}
 		return false;
