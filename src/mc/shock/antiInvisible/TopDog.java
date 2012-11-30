@@ -26,6 +26,7 @@ public class TopDog extends JavaPlugin
     loadConfig();
     
     loadPotions();
+    // Loads config
     
   }
 
