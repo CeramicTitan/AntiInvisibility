@@ -24,9 +24,10 @@ public class TopDog extends JavaPlugin
     this.pm = getServer().getPluginManager();
     this.log = Logger.getLogger("Minecraft");
     loadConfig();
+    // loads config
     
     loadPotions();
-    // Loads config
+    // Loads enabling of listeners method
     
   }
 
