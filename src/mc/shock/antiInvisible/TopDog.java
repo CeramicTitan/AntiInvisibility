@@ -47,6 +47,7 @@ public class TopDog extends JavaPlugin
   {
 	  this.log.log(Level.SEVERE, "[AntiInvisibility] Failed to load AntiInvisibility config", e);
 	  e.printStackTrace();
+	  // Hopefully never happens :o
   }
   }
   
