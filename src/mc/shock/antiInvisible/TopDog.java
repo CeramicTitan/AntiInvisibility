@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import mc.shock.antiInvisible.Metrics;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,12 +15,10 @@ public class TopDog extends JavaPlugin
 	
 	public Logger log;
 	PluginManager pm;
-	FileConfiguration newConfig;
-	Boolean invisibility;
-	Boolean poison;
 	
   public void onEnable()
   {
+	  
 	PluginManager pm = getServer().getPluginManager();
 	pm.registerEvents(new invisibleListener(this), this);
     this.pm = getServer().getPluginManager();
