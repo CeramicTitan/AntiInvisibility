@@ -1,7 +1,9 @@
 package mc.shock.antiInvisible;
 
-import java.util.logging.Level;
+import java.io.IOException;
 import java.util.logging.Logger;
+
+import mc.shock.antiInvisible.Metrics;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
@@ -12,7 +14,7 @@ public class TopDog extends JavaPlugin
   implements Listener
 {
 	
-	private Logger log;
+	public Logger log;
 	PluginManager pm;
 	FileConfiguration newConfig;
 	Boolean invisibility;
@@ -20,57 +22,30 @@ public class TopDog extends JavaPlugin
 	
   public void onEnable()
   {
-    getServer().getPluginManager().registerEvents(this, this);
+	PluginManager pm = getServer().getPluginManager();
+	pm.registerEvents(new invisibleListener(this), this);
     this.pm = getServer().getPluginManager();
     this.log = Logger.getLogger("Minecraft");
-    loadConfig();
-    // loads config
     
-    loadPotions();
-    // Loads enabling of listeners method
+   startMetrics();
     
   }
 
-  private void loadConfig() 
-  {
-  try {
-	reloadConfig();
-	this.newConfig = getConfig();
-	this.newConfig.options().copyDefaults(true);
-	
-	this.invisibility = Boolean.valueOf(this.newConfig.getBoolean("invisibility", false));
-	this.invisibility = Boolean.valueOf(this.newConfig.getBoolean("poison", false));
-	saveConfig();
-	this.log.info("[AntiInvisible] config loaded");
-      }
-    catch (Exception e) 
-  {
-	  this.log.log(Level.SEVERE, "[AntiInvisibility] Failed to load AntiInvisibility config", e);
-	  e.printStackTrace();
-	  // Hopefully never happens :o
-  }
-  }
-  
-  public void loadPotions()
-  {
-	  try
-	  {
-		  getCommand("ai").setExecutor(new CommandHandler(this));
-		  pm.registerEvents(new invisibleListener(this), this);
-		  this.log.info("[AntiInvisible] potion listeners loaded");
-	  }
-	  catch (Exception e)
-	  {
-		  this.log.log(Level.SEVERE, "[AntiInvisibility] Failed to load potion listeners.");
-	  }
-  }
-
   
   
-public void onDisable() 
-{
+  public void onDisable() 
+  {
     // No point in having anything here now.
-}
+  }
+  
+  public void startMetrics() {
+		try {	
+			Metrics metrics = new Metrics(this);	
+			metrics.start();
+		} catch (IOException e) {
+			
+		}
+	}
 
 
 }

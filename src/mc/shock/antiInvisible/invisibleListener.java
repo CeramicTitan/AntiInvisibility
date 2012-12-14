@@ -10,7 +10,6 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class invisibleListener implements Listener 
@@ -21,10 +20,10 @@ public class invisibleListener implements Listener
 	{
 		plugin = instance;
 	}
-	
-	
-	
-	
+
+
+
+
 	@EventHandler
 	  public static PlayerInteractEvent interact(PlayerInteractEvent event)
 	  {
@@ -42,9 +41,7 @@ public class invisibleListener implements Listener
 	        {
 	          event.setCancelled(true);
 	          player.getInventory().setItemInHand(new ItemStack(Material.GLASS_BOTTLE, 1));
-	          player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 1200, 1));
 	          player.sendMessage(ChatColor.GREEN + "Potions of invisibility aren't allowed.");
-	          player.sendMessage(ChatColor.GREEN + "Gave you Regeneration II instead!");
 	        }
 	      }
 	    }
@@ -67,5 +64,5 @@ public class invisibleListener implements Listener
 	    }
 	    return event;
 	  }
-	
+
 }
