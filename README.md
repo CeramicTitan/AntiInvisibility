@@ -16,3 +16,7 @@ None. Will add upon request.
 Installation
 ===============
 Drag and drop AntiInvisible.jar in to your plugins folder, restart and enjoy :D
+
+Thanks
+===============
+Thanks to CeramicTitan for helping me out :D

@@ -21,6 +21,7 @@ public class TopDog extends JavaPlugin
 	  
 	PluginManager pm = getServer().getPluginManager();
 	pm.registerEvents(new invisibleListener(), this);
+	//removed this since you don't need to reference it.
     this.pm = getServer().getPluginManager();
     this.log = Logger.getLogger("Minecraft");
     

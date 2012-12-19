@@ -15,11 +15,10 @@ import org.bukkit.potion.PotionEffectType;
 public class invisibleListener implements Listener 
 {
 
-
-
-
+	//Removed main class reference since its not needed.
 	@EventHandler
 	  public void interact(PlayerInteractEvent event)
+		//doesn't need to be static
 	  {
 	    Action action = event.getAction();
 	    Player player = event.getPlayer();
@@ -38,11 +37,13 @@ public class invisibleListener implements Listener
 	          player.sendMessage(ChatColor.GREEN + "Potions of invisibility aren't allowed.");
 	        }
 	      }
+	      //removed the return statement because it's not needed.
 	    }
 	  }
 
 	  @EventHandler
 	  public void dispense(BlockDispenseEvent event)
+	  	//doesn't need to be static
 	  {
 	    ItemStack it = event.getItem();
 	    Material mat = it.getType();
@@ -56,5 +57,6 @@ public class invisibleListener implements Listener
 	      }
 	    }
 	  }
+	  //Removed return statement
 
 }
