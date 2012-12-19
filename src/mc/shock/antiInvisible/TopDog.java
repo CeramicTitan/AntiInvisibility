@@ -13,14 +13,14 @@ public class TopDog extends JavaPlugin
   implements Listener
 {
 	
-	public Logger log;
+	public Logger log = Logger.getLogger("Minecraft");
 	PluginManager pm;
 	
   public void onEnable()
   {
 	  
 	PluginManager pm = getServer().getPluginManager();
-	pm.registerEvents(new invisibleListener(this), this);
+	pm.registerEvents(new invisibleListener(), this);
     this.pm = getServer().getPluginManager();
     this.log = Logger.getLogger("Minecraft");
     

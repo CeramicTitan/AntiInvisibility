@@ -15,17 +15,11 @@ import org.bukkit.potion.PotionEffectType;
 public class invisibleListener implements Listener 
 {
 
-	private TopDog plugin;
-	public invisibleListener(TopDog instance)
-	{
-		plugin = instance;
-	}
-
 
 
 
 	@EventHandler
-	  public void PlayerInteractEvent interact(PlayerInteractEvent event)
+	  public void interact(PlayerInteractEvent event)
 	  {
 	    Action action = event.getAction();
 	    Player player = event.getPlayer();
@@ -48,7 +42,7 @@ public class invisibleListener implements Listener
 	  }
 
 	  @EventHandler
-	  public void BlockDispenseEvent dispense(BlockDispenseEvent event)
+	  public void dispense(BlockDispenseEvent event)
 	  {
 	    ItemStack it = event.getItem();
 	    Material mat = it.getType();
